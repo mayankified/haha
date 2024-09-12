@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "176416913590",
+    "project_id": "shreya-46ff9",
+    "storage_bucket": "shreya-46ff9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:176416913590:android:12c79a981b244e0202ce17",
+        "android_client_info": {
+          "package_name": "com.tinu.shreya"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "176416913590-2kflr7lf8eg4l13v2pkrva4rbruv2e0k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tinu.shreya",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "176416913590-qnnd34r8ao8vpsj5g5141f68c1d02pj6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9X5S_ZQ2rA0KyiIfZKWPs-hcUZrKG9X8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "176416913590-qnnd34r8ao8vpsj5g5141f68c1d02pj6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
