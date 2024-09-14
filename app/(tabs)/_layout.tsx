@@ -55,9 +55,9 @@ const Tablayout = () => {
           href: user?.role === "admin" ? undefined : null, // Show only for user
           tabBarIcon: ({ color, focused }) => (
             <TabIcon
-              icon={icons.upload}
+              icon={icons.profile}
               color={color}
-              name="Upload"
+              name="Admin"
               focused={focused}
             />
           ),

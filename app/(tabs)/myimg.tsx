@@ -10,7 +10,7 @@ import SearchInput from "@/components/SearchInput";
 import EmptyState from "@/components/EmptyState";
 import ImageCard from "@/components/Imagecard";
 import { useGlobalContext } from "@/context/GlobalProvider";
-import { getMediaById, getPostsByUser, getUnupdatedMedia, getUpdatedMedia } from "@/lib/FIrebaseAPIS";
+import { getUpdatedMedia } from "@/lib/FIrebaseAPIS";
 import { icons } from "@/constants";
 
 // Define the types for the post and its related properties
@@ -32,7 +32,7 @@ const MyImg = () => {
   // Fetch unupdated media from Firestore
   const fetchPosts = async () => {
     try {
-      const unupdatedMedia = await getPostsByUser(user.uid as string);
+      const unupdatedMedia = await getUpdatedMedia();
       setPosts(unupdatedMedia as any);  // Set the fetched media to state
     } catch (error) {
       console.error("Error fetching posts:", error);

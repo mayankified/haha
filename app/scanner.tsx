@@ -5,13 +5,14 @@ import {
   Text,
   Image,
   ActivityIndicator,
+  Alert,
 } from "react-native";
 import { CameraView, CameraType } from "expo-camera";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
 import { icons } from "@/constants";
-import { Video } from "expo-av"; // Import the Video component for video playback
-
+import { ResizeMode, Video } from "expo-av"; // Import the Video component for video playback
+import axios from "axios";
 const Scanner = () => {
   const [facing, setFacing] = useState<CameraType>("back"); // Use CameraType for toggling
   const [isProcessing, setIsProcessing] = useState(false); // Loading state for image processing
@@ -21,18 +22,40 @@ const Scanner = () => {
 
   const handleCapture = async () => {
     if (cameraRef.current) {
-      const options = { quality: 0.5, base64: true };
-      const data = await cameraRef.current.takePictureAsync(options);
-      console.log("Photo captured:", data.uri);
-      setIsProcessing(true);
+      try {
+        const options = { quality: 0.5 };
+        // @ts-ignore
+        const data = await cameraRef.current.takePictureAsync(options);
+        setIsProcessing(true);
 
-      // Simulate processing and fetching a video URL based on the captured image
-      setTimeout(() => {
-        setVideoUrl(
-          "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4"
+        // Create a new FormData object
+        const formData = new FormData();
+
+        // Append the image to FormData with the required properties
+        formData.append("image", {
+          uri: data.uri, // The local URI of the image
+          name: "photo.jpg", // The name of the file
+          type: "image/jpeg", // The MIME type of the file
+        } as any);
+        // Send the formData object using axios
+        const response = await axios.post(
+          "http://192.168.183.56:3000/query",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
         );
-        setIsProcessing(false); // Stop the loader after video URL is fetched
-      }, 2000); // Simulate 2 second API response
+        const url = response.data.result.text;
+        if (!url)
+          Alert.alert("Corresponding Image not found!, Please Try again");
+
+        setIsProcessing(false);
+        setVideoUrl(response.data.result.text);
+      } catch (error) {
+        console.log("Error:", error);
+      }
     }
   };
 
@@ -48,7 +71,8 @@ const Scanner = () => {
           ref={videoRef}
           source={{ uri: videoUrl }} // Video source URL
           style={{ flex: 1 }}
-          resizeMode="contain"
+          // @ts-ignore
+          resizeMode={ResizeMode.CONTAIN}
           shouldPlay
           isLooping
         />
@@ -104,7 +128,7 @@ const Scanner = () => {
 
       {/* Show loader if image is being processed */}
       {isProcessing && (
-        <View className="absolute inset-0 justify-center items-center">
+        <View className="absolute left-[40%] top-[50%] justify-center items-center">
           <ActivityIndicator size="large" color="#00ff00" />
           <Text className="text-white mt-2">Processing...</Text>
         </View>
