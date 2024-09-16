@@ -36,7 +36,7 @@ const signup = () => {
 
   async function onGoogleButtonPress() {
     // Check if your device supports Google Play
-    await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
+    await GoogleSignin.hasPlayServices();
     // Get the users ID token
     const { idToken } = await GoogleSignin.signIn();
 

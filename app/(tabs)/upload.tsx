@@ -120,7 +120,7 @@ const Upload = () => {
       // Set the current step
 
       const result = await axios.post(
-        "http://192.168.183.56:3000/upload", // Replace with your actual server URL
+        "http://192.168.133.56:3000/upload", // Replace with your actual server URL
         {
           imageUrl: img,
           text: video,

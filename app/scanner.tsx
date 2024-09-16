@@ -39,7 +39,7 @@ const Scanner = () => {
         } as any);
         // Send the formData object using axios
         const response = await axios.post(
-          "http://192.168.183.56:3000/query",
+          "http://192.168.133.56:3000/query",
           formData,
           {
             headers: {
