@@ -1,51 +1,120 @@
-# Welcome to your Expo app 👋
+Here's a README file in Markdown format for your React Native project with detailed setup instructions:
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+```markdown
+# React Native Project
 
-## Get started
+This is a React Native project that interacts with a Node.js backend server for image uploads and scanning. Follow the instructions below to set up and run the project on your local machine and Android device.
 
-1. Install dependencies
+## Prerequisites
+
+- Node.js and npm
+- Docker and Docker Compose (for the Node.js backend)
+- Android device with USB debugging enabled
+- `adb` (Android Debug Bridge) installed
+- `npx` and Expo CLI
+
+## Getting Started
+
+### 1. Setup and Start the Node.js Backend Server
+
+First, you need to set up and start the Node.js backend server. Follow these steps:
+
+1. **Navigate to the Backend Directory**
+
+   If the backend server is in a different repository or directory, navigate to it:
 
    ```bash
-   npm install
+   cd path/to/backend
    ```
 
-2. Start the app
+2. **Build and Start the Backend Server with Docker Compose**
+
+   Run the following command to build and start the services defined in `docker-compose.yml`:
 
    ```bash
-    npx expo start
+   sudo docker-compose up -d
    ```
 
-In the output, you'll find options to open the app in a
+   This command will build the Docker images and start the services in detached mode.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+3. **Run Initialization Script (`utils.js`)** (Only for the First Time)
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+   The `utils.js` script needs to be run only once to perform any necessary initialization tasks.
 
-## Get a fresh project
+   ```bash
+   node utils.js
+   ```
 
-When you're ready, run:
+4. **Start the Backend Server**
 
-```bash
-npm run reset-project
+   Start the Node.js server with the following command:
+
+   ```bash
+   node server.js
+   ```
+
+   The server will start on port `3000`.
+
+### 2. Configure the React Native Project
+
+1. **Replace Backend URLs in React Native Code**
+
+   - Open the files `upload.tsx` and `scanner.tsx` in your React Native project.
+   - Replace the existing URLs with the IP address of your local machine and port `3000`.
+   - The URLs should look like this:
+
+     ```js
+     'http://<your-ip>:3000'; // Replace <your-ip> with your actual IP
+     ```
+
+   - Example:
+     ```js
+     'http://192.168.133.56:3000';
+     ```
+
+### 3. Running the React Native App on Android Device
+
+1. **Connect Your Android Phone to Your PC**
+
+   - Connect your Android device to your PC via USB.
+   - Ensure that USB debugging is enabled on the Android device.
+
+2. **Verify `adb` is Installed and Device is Detected**
+
+   - Run the following command to ensure `adb` is installed and your device is detected:
+
+     ```bash
+     adb devices
+     ```
+
+   - You should see your device listed.
+
+3. **Run the React Native App**
+
+   - Run the app on your Android device using Expo:
+
+     ```bash
+     npx expo run:android
+     ```
+
+   - This will build and deploy the app to the connected Android device.
+
+### Important Notes
+
+- **Ensure the Backend Server is Running:** Make sure the Node.js server is running and accessible from your Android device.
+- **IP Address:** Replace `<your-ip>` with the local IP address of your machine where the backend server is running.
+- **Network Connection:** Your Android device and the computer running the server should be on the same network.
+
+### Troubleshooting
+
+- **Network Issues:** If you face network issues, ensure that your Android device and computer are on the same network and the IP address is correctly set.
+- **Backend Server Errors:** If the backend server fails to start, check the logs for errors and ensure all dependencies are installed.
+
+### License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
-# haha
+### How to Use:
+1. **Copy the above text** and save it as `README.md` in the root directory of your React Native project.
+2. **Customize the sections** if necessary, such as adding a specific IP address or additional steps.
