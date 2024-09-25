@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
@@ -10,7 +10,6 @@ import {
   TouchableOpacity,
 } from "react-native";
 
-import { images } from "../../constants";
 import FormField from "@/components/Formfield";
 import CustomButton from "@/components/CustomButton";
 import auth from "@react-native-firebase/auth";
@@ -22,15 +21,23 @@ const SignIn = () => {
     email: "",
     password: "",
   });
-
+  
+  useEffect(() => {
+    GoogleSignin.configure({
+      webClientId:
+        "176416913590-qnnd34r8ao8vpsj5g5141f68c1d02pj6.apps.googleusercontent.com",
+    });
+    console.log("Google Signin Configured");
+  }, []);
   async function onGoogleButtonPress() {
+
     // Check if your device supports Google Play
     await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
     // Get the users ID token
-    const { idToken } = await GoogleSignin.signIn();
-
+    const response = await GoogleSignin.signIn();
+    const idToken=response.data?.idToken;
     // Create a Google credential with the token
-    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+    const googleCredential = auth.GoogleAuthProvider.credential(idToken as string);
     // Sign-in the user with the credential
     // co auth().signInWithCredential(googleCredential);
     const userCredential = await auth().signInWithCredential(googleCredential);

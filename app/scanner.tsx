@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   View,
   TouchableOpacity,
@@ -7,13 +7,28 @@ import {
   ActivityIndicator,
   Alert,
 } from "react-native";
-import { CameraView, CameraType } from "expo-camera";
+import { CameraView, CameraType, Camera } from "expo-camera";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
 import { icons } from "@/constants";
+import * as ImageManipulator from "expo-image-manipulator";
 import { ResizeMode, Video } from "expo-av"; // Import the Video component for video playback
 import axios from "axios";
+
 const Scanner = () => {
+  useEffect(() => {
+    (async () => {
+      const { status } = await Camera.getCameraPermissionsAsync();
+      if (status !== "granted") {
+        const { status: newStatus } =
+          await Camera.requestCameraPermissionsAsync();
+        if (newStatus !== "granted") {
+          Alert.alert("Camera access is required to use this feature.");
+        }
+      }
+      // You can now safely use the camera here after permission is granted
+    })();
+  }, []);
   const [facing, setFacing] = useState<CameraType>("back"); // Use CameraType for toggling
   const [isProcessing, setIsProcessing] = useState(false); // Loading state for image processing
   const [videoUrl, setVideoUrl] = useState(""); // State to store the video URL
@@ -23,23 +38,30 @@ const Scanner = () => {
   const handleCapture = async () => {
     if (cameraRef.current) {
       try {
-        const options = { quality: 0.5 };
+        const options = { quality: 0.4 };
         // @ts-ignore
         const data = await cameraRef.current.takePictureAsync(options);
         setIsProcessing(true);
-
+        const compressedImage = await ImageManipulator.manipulateAsync(
+          data.uri,
+          [{ resize: { width: 500 } }],
+          {
+            compress: 0.8,
+          }
+        );
         // Create a new FormData object
         const formData = new FormData();
-
+        console.log("Data:", data.uri);
+        console.log("COmpress", compressedImage.uri);
         // Append the image to FormData with the required properties
         formData.append("image", {
-          uri: data.uri, // The local URI of the image
+          uri: compressedImage.uri, // The local URI of the image
           name: "photo.jpg", // The name of the file
           type: "image/jpeg", // The MIME type of the file
         } as any);
         // Send the formData object using axios
         const response = await axios.post(
-          "http://192.168.133.56:3000/query",
+          "http://13.127.221.253:3000/query",
           formData,
           {
             headers: {

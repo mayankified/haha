@@ -10,11 +10,10 @@ import { icons } from "../../constants";
 import InfoBox from "@/components/InfoBox";
 import { useGlobalContext } from "@/context/GlobalProvider";
 import { useEffect, useState } from "react";
-import { getCountOfAllMedia, getCountOfAllUsers, getCountOfPostsByUser, getCountOfUpdatedMedia, getCountOfUpdatedPostsByUser } from "@/lib/FIrebaseAPIS";
+import { getCountOfAllMedia, getCountOfAllUsers,getCountOfUpdatedMedia } from "@/lib/FIrebaseAPIS";
 
 const Profile = () => {
   const [totalImages, setTotalImages] = useState(0);
-  const [approvedImages, setApprovedImages] = useState(0);
   const [totalUsers, setTotalUsers] = useState(0);
   const { user } = useGlobalContext();
 
@@ -23,9 +22,7 @@ const Profile = () => {
     const fetchStats = async () => {
       try {
         const totalImagesCount = await getCountOfAllMedia();
-        const approvedImagesCount = await getCountOfUpdatedMedia();
         setTotalImages(totalImagesCount);
-        setApprovedImages(approvedImagesCount);
       } catch (error) {
         console.error("Error fetching stats:", error);
       }
@@ -88,14 +85,6 @@ const Profile = () => {
             titleStyles="text-xl"
             containerStyles="mr-10"
           />
-          <InfoBox
-            title={approvedImages || 0}
-            subtitle="Approved"
-            titleStyles="text-xl"
-          />
-        </View>
-
-        <View className="mt-5">
           <InfoBox
             title={totalUsers || 0}
             subtitle="Total Users"

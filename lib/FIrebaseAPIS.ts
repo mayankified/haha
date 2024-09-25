@@ -151,3 +151,32 @@ export const getCountOfUpdatedPostsByUser = async (uid: string) => {
     return 0;
   }
 };
+export const getMediaById = async (mediaId: string) => {
+  try {
+    // Reference to the media document using the mediaId
+    const mediaRef = firestore().collection("media").doc(mediaId);
+
+    // Fetch the media document
+    const mediaDoc = await mediaRef.get();
+
+    if (!mediaDoc.exists) {
+      Alert.alert(`No media found with id: ${mediaId}`);
+      return null;
+    }
+
+    // Get media data
+    const mediaData = mediaDoc.data();
+
+    // If the media document includes a user reference, fetch the user data
+    
+
+    // Return the media data combined with the user data
+    return {
+      id: mediaDoc.id,
+      ...mediaData
+    };
+  } catch (error) {
+    console.error("Error getting media by ID:", error);
+    return null;
+  }
+};

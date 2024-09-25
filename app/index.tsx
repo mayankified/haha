@@ -46,8 +46,7 @@ const index = () => {
             />
           </View>
           <Text className="text-sm font-pregular text-gray-100 mt-7 text-center">
-            Where Creativity Meets Innovation: Embark on a Journey of Limitless
-            Exploration with Aora
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Est facilis qui maiores, tempora maxime ipsa sequi dolorem aut ratione vero?
           </Text>
           <CustomButton
             title="Continue"
