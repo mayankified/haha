@@ -21,7 +21,7 @@ const SignIn = () => {
     email: "",
     password: "",
   });
-  
+
   useEffect(() => {
     GoogleSignin.configure({
       webClientId:
@@ -30,14 +30,15 @@ const SignIn = () => {
     console.log("Google Signin Configured");
   }, []);
   async function onGoogleButtonPress() {
-
     // Check if your device supports Google Play
     await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
     // Get the users ID token
     const response = await GoogleSignin.signIn();
-    const idToken=response.data?.idToken;
+    const idToken = response.data?.idToken;
     // Create a Google credential with the token
-    const googleCredential = auth.GoogleAuthProvider.credential(idToken as string);
+    const googleCredential = auth.GoogleAuthProvider.credential(
+      idToken as string
+    );
     // Sign-in the user with the credential
     // co auth().signInWithCredential(googleCredential);
     const userCredential = await auth().signInWithCredential(googleCredential);
@@ -140,6 +141,7 @@ const SignIn = () => {
               Signup
             </Link>
           </View>
+          
         </View>
       </ScrollView>
     </SafeAreaView>

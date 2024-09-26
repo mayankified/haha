@@ -6,7 +6,7 @@ import { StatusBar } from "expo-status-bar";
 // import { useGlobalContext } from "../../context/GlobalProvider";
 
 const AuthLayout = () => {
-  const {isLogged, loading } = useGlobalContext();
+  const { isLogged, loading } = useGlobalContext();
   if (!loading && isLogged) return <Redirect href="/home" />;
 
   return (
@@ -24,7 +24,6 @@ const AuthLayout = () => {
             headerShown: false,
           }}
         />
-        
       </Stack>
 
       {/* <Loader isLoading={loading} /> */}

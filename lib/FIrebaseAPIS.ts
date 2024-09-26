@@ -3,6 +3,7 @@
 import firestore from "@react-native-firebase/firestore";
 import storage from "@react-native-firebase/storage";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
+import axios from "axios";
 import { Alert } from "react-native";
 
 export const addUserToFirestore = async (
@@ -47,8 +48,8 @@ export const addUserWithPhoneToFirestore = async (
 };
 export const uploadMedia = async (
   imageUrl: string,
-  videoUrl:string,
-  title: string,
+  videoUrl: string,
+  title: string
 ) => {
   try {
     // Generate a new document reference and its ID
@@ -62,7 +63,7 @@ export const uploadMedia = async (
       id: documentId, // Add the generated ID to the document data
       title: title,
       imageUrl: imageUrl,
-      videoUrl: videoUrl, 
+      videoUrl: videoUrl,
       createdAt: firestore.FieldValue.serverTimestamp(),
     });
 
@@ -73,7 +74,6 @@ export const uploadMedia = async (
     throw error; // Re-throw the error for handling elsewhere if needed
   }
 };
-
 
 export const getUpdatedMedia = async () => {
   try {
@@ -92,7 +92,6 @@ export const getUpdatedMedia = async () => {
     return [];
   }
 };
-
 
 export const getCountOfAllMedia = async () => {
   try {
@@ -168,15 +167,106 @@ export const getMediaById = async (mediaId: string) => {
     const mediaData = mediaDoc.data();
 
     // If the media document includes a user reference, fetch the user data
-    
 
     // Return the media data combined with the user data
     return {
       id: mediaDoc.id,
-      ...mediaData
+      ...mediaData,
     };
   } catch (error) {
     console.error("Error getting media by ID:", error);
     return null;
+  }
+};
+
+export const getUsersFromFirestore = async () => {
+  try {
+    const usersRef = firestore().collection("users");
+    const querySnap = await usersRef.get();
+
+    // Map over the documents and extract user data
+    const usersList = querySnap.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+    return usersList; // Return the list of users
+  } catch (error) {
+    console.error("Error getting users from Firestore:", error);
+    return []; // Return an empty array in case of an error
+  }
+};
+
+export const updateUserStatus = async (userId: string, isAuth: boolean) => {
+  try {
+    const userRef = firestore().collection("users").doc(userId);
+
+    // Update the isAuth field for the user
+    await userRef.update({
+      isAuth: isAuth,
+    });
+
+    console.log(
+      `User ${userId} status updated to ${isAuth ? "approved" : "unapproved"}`
+    );
+  } catch (error: any) {
+    console.error("Error updating user status:", error);
+    throw new Error(`Unable to update user status: ${error.message}`);
+  }
+};
+
+export const deleteMedia = async (mediaId: string) => {
+  try {
+    // Step 1: Fetch media document to retrieve URLs
+    const mediaRef = firestore().collection("media").doc(mediaId);
+    const mediaDoc = await mediaRef.get();
+
+    if (!mediaDoc.exists) {
+      console.error(`No media found with id: ${mediaId}`);
+      return { success: false, message: "Media not found" };
+    }
+
+    const mediaData = mediaDoc.data();
+    const imageUrl = mediaData?.imageUrl;
+    const videoUrl = mediaData?.videoUrl;
+
+    // Step 2: Delete the video from vector DB
+    if (videoUrl) {
+      try {
+        const result = await axios.post(
+          "http://13.127.221.253:3000/delete", // Replace with your actual server URL
+          {
+            text: videoUrl,
+          }
+        );
+        console.log("Video deleted from vector database:", result.data);
+      } catch (error) {
+        console.error("Error deleting video from vector database:", error);
+        throw new Error("Unable to delete video from vector database");
+      }
+    }
+
+    // Step 3: Delete the image from Firebase Storage
+    if (imageUrl) {
+      const imageRef = storage().refFromURL(imageUrl); // Create a reference to the image
+      await imageRef.delete(); // Delete the image
+      console.log("Image deleted from Firebase storage:", imageUrl);
+    }
+
+    // Step 4: Delete the video from Firebase Storage
+    if (videoUrl) {
+      const videoRef = storage().refFromURL(videoUrl); // Create a reference to the video
+      await videoRef.delete(); // Delete the video
+      console.log("Video deleted from Firebase storage:", videoUrl);
+    }
+
+    // Step 5: Delete the media document from Firestore
+    await mediaRef.delete(); // Delete the document from Firestore
+    console.log("Media document deleted from Firestore:", mediaId);
+
+    return { success: true, message: "Media and associated files deleted successfully" };
+  } catch (error: any) {
+    console.error("Error deleting media and associated files:", error);
+    throw new Error(`Unable to delete media: ${error.message}`);
   }
 };

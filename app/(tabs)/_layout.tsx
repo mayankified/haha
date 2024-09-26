@@ -63,6 +63,22 @@ const Tablayout = () => {
           ),
         }}
       />
+      <Tabs.Screen
+        name="users"
+        options={{
+          title: "Users",
+          headerShown: false,
+          href: user?.role === "admin" ? undefined : null, // Show only for user
+          tabBarIcon: ({ color, focused }) => (
+            <TabIcon
+              icon={icons.profile}
+              color={color}
+              name="Users"
+              focused={focused}
+            />
+          ),
+        }}
+      />
 
 
       {/* User-Only Tab */}

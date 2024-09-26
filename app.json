@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "maya",
-    "slug": "maya",
+    "name": "Augmenta",
+    "slug": "Augmenta",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/MAYA.png",
@@ -42,7 +42,7 @@
         "origin": false
       },
       "eas": {
-        "projectId": "4efe44b3-e1ab-459f-9535-b5bdb5971bc7"
+        "projectId": "f177d117-11d6-4233-87fd-1b303a7850d8"
       }
     }
   }
