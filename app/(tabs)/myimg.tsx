@@ -28,7 +28,6 @@ const MyImg = () => {
   const { user } = useGlobalContext();
   const [posts, setPosts] = useState<Post[]>([]);
   const [refreshing, setRefreshing] = useState<boolean>(false);
-  console.log("user", user);
   // Fetch unupdated media from Firestore
   const fetchPosts = async () => {
     try {
@@ -87,7 +86,6 @@ const MyImg = () => {
                 /> */}
               </View>
             </View>
-            <SearchInput />
           </View>
         )}
         ListEmptyComponent={() => (

@@ -30,9 +30,8 @@ const signup = () => {
   useEffect(() => {
     GoogleSignin.configure({
       webClientId:
-        "176416913590-qnnd34r8ao8vpsj5g5141f68c1d02pj6.apps.googleusercontent.com",
+        "209138330850-m7ot0cl0ubos6ff0t0ker0rg5b98g258.apps.googleusercontent.com",
     });
-    console.log("Google Signin Configured");
   }, []);
 
   async function onGoogleButtonPress() {
@@ -41,7 +40,6 @@ const signup = () => {
     // Get the users ID token
     const response = await GoogleSignin.signIn();
     const idToken=response.data?.idToken;
-    console.log("ID Token:", idToken);
     // Create a Google credential with the token
     const googleCredential = auth.GoogleAuthProvider.credential(idToken as string);
     // Sign-in the user with the credential
@@ -65,7 +63,6 @@ const signup = () => {
     }
     setisSubmitting(true);
     try {
-      console.log(form);
       const result = await auth().createUserWithEmailAndPassword(
         form.email,
         form.password
@@ -84,7 +81,6 @@ const signup = () => {
 
       //set it to global state
       console.log("Sign up Success!!");
-      console.log(result);
 
       router.push("/home");
     } catch (error: any) {
@@ -109,11 +105,11 @@ const signup = () => {
           /> */}
 
           <Text className="text-secondary-100 font-psemibold text-center text-4xl">
-            Maya
+          Augmenta
           </Text>
 
           <Text className="text-2xl font-semibold text-white mt-10 font-psemibold">
-            Sign Up to Maya
+            Sign Up to Augmenta
           </Text>
 
           <View className="flex justify-end pt-5 flex-row gap-2">

@@ -120,13 +120,12 @@ const Upload = () => {
       // Set the current step
 
       const result = await axios.post(
-        "http://13.127.221.253:3000/upload", // Replace with your actual server URL
+        "http://13.202.228.149:3000/upload", // Replace with your actual server URL
         {
           imageUrl: img,
           text: video,
         }
       );
-      console.log("Upload successful:", result.data);
     } catch (error: any) {
       console.error("Error uploading to vector DB:", error.message);
     }

@@ -13,12 +13,12 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "package": "com.tinu.shreya",
+      "package": "com.augmenta.app",
       "supportsTablet": true
     },
     "android": {
       "jsEngine": "jsc",
-      "package": "com.tinu.shreya",
+      "package": "com.augmenta.app",
       "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",

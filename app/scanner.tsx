@@ -38,30 +38,22 @@ const Scanner = () => {
   const handleCapture = async () => {
     if (cameraRef.current) {
       try {
-        const options = { quality: 0.4 };
+        const options = { quality: 1 };
         // @ts-ignore
         const data = await cameraRef.current.takePictureAsync(options);
         setIsProcessing(true);
-        const compressedImage = await ImageManipulator.manipulateAsync(
-          data.uri,
-          [{ resize: { width: 500 } }],
-          {
-            compress: 0.8,
-          }
-        );
+
         // Create a new FormData object
         const formData = new FormData();
-        console.log("Data:", data.uri);
-        console.log("COmpress", compressedImage.uri);
         // Append the image to FormData with the required properties
         formData.append("image", {
-          uri: compressedImage.uri, // The local URI of the image
+          uri: data.uri, // The local URI of the image
           name: "photo.jpg", // The name of the file
           type: "image/jpeg", // The MIME type of the file
         } as any);
         // Send the formData object using axios
         const response = await axios.post(
-          "http://13.127.221.253:3000/query",
+          "http://13.202.228.149:3000/query",
           formData,
           {
             headers: {

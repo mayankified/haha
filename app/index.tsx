@@ -24,7 +24,7 @@ const index = () => {
             resizeMode="contain"
           /> */}
           <Text className="text-white font-psemibold text-3xl">
-            Maya app
+            Augmenta
           </Text>
 
           <Image
@@ -37,7 +37,7 @@ const index = () => {
               Discover Endless{"\n"}
               Possibilities with{" "}
               {/* textsecondary200 */}
-              <Text className=" text-[#c877f4]">maya</Text>
+              <Text className=" text-[#c877f4]">Augmenta</Text>
             </Text>
             <Image
               source={images.path}
@@ -45,9 +45,7 @@ const index = () => {
               resizeMode="contain"
             />
           </View>
-          <Text className="text-sm font-pregular text-gray-100 mt-7 text-center">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Est facilis qui maiores, tempora maxime ipsa sequi dolorem aut ratione vero?
-          </Text>
+          
           <CustomButton
             title="Continue"
             handlePress={() => router.push("/signin")}

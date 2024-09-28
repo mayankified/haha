@@ -30,7 +30,6 @@ type Role = "user" | "admin";
 const Tablayout = () => {
   const { isLogged, loading, user } = useGlobalContext();
   if (!loading && !isLogged) return <Redirect href="/signin" />;
-  // console.log("user", user);
   return (
     <Tabs
       screenOptions={{

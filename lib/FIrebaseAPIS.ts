@@ -13,7 +13,6 @@ export const addUserToFirestore = async (
   role: string
 ) => {
   try {
-    console.log({ uid, email, username, role });
     const userRef = firestore().collection("users").doc(uid); // Reference to the user document
     // await setDoc(userRef, { email, username, role });
     await userRef.set({ uid, email, username, role }); // Add user data to Firestore
@@ -234,7 +233,7 @@ export const deleteMedia = async (mediaId: string) => {
     if (videoUrl) {
       try {
         const result = await axios.post(
-          "http://13.127.221.253:3000/delete", // Replace with your actual server URL
+          "http://13.202.228.149:3000/delete", // Replace with your actual server URL
           {
             text: videoUrl,
           }

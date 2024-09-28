@@ -33,14 +33,13 @@ const GlobalProvider = ({ children }) => {
           const userDoc = await userDocref.get();
           if (userDoc.exists) {
             const userData = userDoc.data();
-            console.log("userData", userData);
-            console.log("usr", usr);
+           
             // Map user details from Firebase user object
             const mappedUser = {
               uid: userData.uid, // Firebase User ID
               email: userData.email,
               isAuth: userData.isAuth,
-              username: userData.displayName || "Anonymous", // Use Firebase displayName or a default value
+              username: usr.displayName || "Anonymous", // Use Firebase displayName or a default value
               role: userData.role || "user", // Use role from Firestore or default to 'user'
             };
             setUser(mappedUser);
@@ -65,7 +64,6 @@ const GlobalProvider = ({ children }) => {
     // Cleanup subscription on unmount
     return () => unsubscribe();
   }, []);
-  console.log("user", user);
   return (
     <GlobalContext.Provider
       value={{ user, setUser, isLogged, setIsLogged, loading }}

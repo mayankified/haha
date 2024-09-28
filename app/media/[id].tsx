@@ -25,7 +25,6 @@ const Mediapost = () => {
         try {
           const fetchedMedia = await getMediaById(id as string);
           setMedia(fetchedMedia as any);
-          console.log("Media:", fetchedMedia);
         } catch (error) {
           console.error("Error fetching media:", error);
         }
@@ -77,11 +76,11 @@ const Mediapost = () => {
   }
 
   return (
-    <SafeAreaView className="bg-primary h-full">
+    <SafeAreaView className="bg-primary h-full flex pt-20">
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <View className="flex flex-col items-center p-4">
           <View className="flex-1 gap-3 mb-2">
-            <Text className="text-white capitalize text-center text-3xl font-bold">
+            <Text className="text-white capitalize text-center text-3xl font-pbold">
               {media.title}
             </Text>
           </View>

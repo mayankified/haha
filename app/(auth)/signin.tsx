@@ -25,9 +25,8 @@ const SignIn = () => {
   useEffect(() => {
     GoogleSignin.configure({
       webClientId:
-        "176416913590-qnnd34r8ao8vpsj5g5141f68c1d02pj6.apps.googleusercontent.com",
+        "209138330850-m7ot0cl0ubos6ff0t0ker0rg5b98g258.apps.googleusercontent.com",
     });
-    console.log("Google Signin Configured");
   }, []);
   async function onGoogleButtonPress() {
     // Check if your device supports Google Play
@@ -59,8 +58,7 @@ const SignIn = () => {
         form.password
       );
 
-      console.log("Sign in Success!!");
-      console.log(result);
+      
 
       Alert.alert("Success", "User signed in successfully");
       router.replace("/home");
@@ -87,19 +85,17 @@ const SignIn = () => {
             className="w-[115px] h-[34px]"
           /> */}
           <Text className="text-secondary-100 font-psemibold text-center text-4xl">
-            Maya
+            Augmenta
           </Text>
 
           <Text className="text-2xl font-semibold text-white mt-10 font-psemibold">
-            Log in to Maya
+            Log in to Augmenta
           </Text>
           <View className="flex justify-end pt-5 flex-row gap-2">
             <TouchableOpacity
               className=" font-pmedium text-sm bg-secondary px-6 py-2 rounded-full text-white"
               onPress={() =>
-                onGoogleButtonPress().then(() =>
-                  console.log("Signed in with Google!")
-                )
+                onGoogleButtonPress()
               }
             >
               <Text className="text-white font-psemibold">Use Google</Text>

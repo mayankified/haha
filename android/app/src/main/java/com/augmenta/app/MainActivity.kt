@@ -1,4 +1,4 @@
-package com.tinu.shreya
+package com.augmenta.app
 
 import android.os.Build
 import android.os.Bundle

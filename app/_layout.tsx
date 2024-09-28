@@ -48,7 +48,7 @@ const Rootlayout = () => {
         {/* <Stack.Screen name="update/[id]" options={{ headerShown: false }} /> */}
         <Stack.Screen name="home" options={{ headerShown: false }} />
         <Stack.Screen name="scanner" options={{ headerShown: false }} />
-        {/* <Stack.Screen name="media/[id]" options={{ headerShown: false }} /> */}
+        <Stack.Screen name="media/[id]" options={{ headerShown: false }} />
       </Stack>
     </GlobalProvider>
   );
